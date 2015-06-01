@@ -35,4 +35,11 @@ app.get('/', function (req, res) {
   });
 });
 
+//POST owner=xxx&type=xxx&content=xxx&time=xxx
+app.post('/back', function (req, res) {
+  redis.throwBack(req.body, function (result) {
+    res.json(result);
+  });
+});
+
 app.listen(3000);
