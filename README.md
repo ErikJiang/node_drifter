@@ -10,7 +10,7 @@ NodeJS漂流瓶应用
 
 2. `cd node_drifter/`
 
-3. `npm install`
+3. `npm install && bower install`
 
 ### 如何运行
 
