@@ -3,10 +3,10 @@ var redis = require('../models/redis');
 
 module.exports = function(app) {
     /* GET home page. */
-    //app.get('/', function(req, res, next) {
-    //    res.render('index', { title: 'Express' });
-    //});
-
+    app.get('/', function(req, res, next) {
+        res.render('index', { title: 'Express' });
+    });
+/*
     app.post('/', function (req, res) {
         if (!(req.body.owner && req.body.type && req.body.content)) {
             return res.json({code: 0, msg: '信息不完整.'});
@@ -30,7 +30,7 @@ module.exports = function(app) {
             res.json(result);
         });
     });
-
+*/
     //user routes handler
     usrRouter(app);
 };

@@ -1,0 +1,23 @@
+{
+  "name": "node_drifter",
+  "description": "",
+  "main": "",
+  "authors": [
+    "JiangInk <JiangInk@foxmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/JiangInk/node_drifter",
+  "moduleType": [
+    "globals"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

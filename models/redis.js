@@ -2,8 +2,9 @@
  * Created by jiangink on 16/1/5.
  */
 var redis = require('redis');
-var uuid = require('node-uuid');
-var poolModule = require('generic-pool');
+var uuid = require('node-uuid');            //生成唯一ID
+var poolModule = require('generic-pool');   //Redis连接池创建与管理
+
 var pool = poolModule.Pool({
     name: 'redisPool',
     create: function(callback) {

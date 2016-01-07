@@ -1,11 +1,64 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Node Drifter</title>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="center-block bg-image">
+        <div class="btn-group btn-group-justified" role="group" aria-label="">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModel" data-whatever="@mdo">
+                    <span class="glyphicon glyphicon-download"></span>
+                    捞瓶子
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModel" data-whatever="@mdo">
+                    <span class="glyphicon glyphicon-upload"></span>
+                    扔瓶子
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModel" data-whatever="@mdo">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    我的瓶子
+                </button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModel" tabindex="-1" role="dialog" aria-labelledby="myModelLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModelLabel">New message</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Recipient:</label>
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="control-label">Message:</label>
+                                <textarea class="form-control" id="message-text"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Send message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/javascripts/main.js"></script>
   </body>
 </html>
