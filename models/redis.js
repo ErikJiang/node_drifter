@@ -23,17 +23,17 @@ var pool = poolModule.Pool({
 function throwOneBottle(bottle, callback) {
     bottle.time = bottle.time || Date.now();
     var bottleId = uuid.v4();
-    var type = {male: 0, female: 1};
+    //var type = {male: 0, female: 1};
     pool.acquire(function (err, client) {
         if(err) {
             return callback({code: 0, msg: err});
         }
-        client.SELECT(type[bottle.type], function(){
+        client.SELECT(bottle.type, function(){
             client.HMSET(bottleId, bottle, function (err, result) {
                 if(err) {
                     return callback({code: 0, msg: '过会儿再试试吧！'});
                 }
-                client.EXPIRE(bottleId, 86400, function () {
+                client.PEXPIRE(bottleId, 86400000+bottle.time-Date.now(), function () {
                     pool.release(client);
                 });
                 callback({code: 1, msg: result});
@@ -43,20 +43,20 @@ function throwOneBottle(bottle, callback) {
 }
 
 function pickOneBottle(info, callback){
-    var type = {all: Math.round(Math.random()), male: 0, female: 1};
-    info.type = info.type || 'all';
+    //var type = {all: Math.round(Math.random()), male: 0, female: 1};
+    //info.type = info.type || 'all';
     pool.acquire(function (err, client) {
         if(err) {
             return callback({code: 0, msg: err});
         }
 
-        client.SELECT(type[info.type], function () {
+        client.SELECT(info.type, function () {
             client.RANDOMKEY(function (err, bottleId) {
                if(err) {
                    return callback({code: 0, msg: err});
                }
                if(!bottleId) {
-                   return callback({code: 0, msg: '大海空空如也……'});
+                   return callback({code: 2, msg: '恭喜你捞到一只派大星！'});
                }
                client.HGETALL(bottleId, function(err, bottle) {
                    if (err) {
@@ -79,6 +79,10 @@ exports.throw = function(bottle, callback) {
 };
 
 exports.pick = function (info, callback) {
+    //20%概率捡到海星
+    if (Math.random() <= 0.2) {
+        return callback({code: 2, msg: '恭喜你捞到一只派大星！'});
+    }
     pickOneBottle(info, function(result) {
         callback(result);
     });

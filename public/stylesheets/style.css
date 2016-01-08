@@ -3,11 +3,32 @@
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-
+body {
+    background: #b9def0;
+}
 
 .bg-image {
     width: 1024px;
     height: 600px;
+    border-radius: 5px;
     background: url("../images/driftBottleBG.jpg") no-repeat;
     margin-top: 2%;
+}
+
+.pos-center {
+    top: 15%;
+}
+
+#resultModal .modal-body {
+    height: 200px;
+}
+
+#resultModal .modal-body .bottle-img {
+    width: 100%;
+    height: 100%;
+}
+
+#resultModal .modal-body .start-img {
+    width: 25%;
+    height: 70%;
 }
