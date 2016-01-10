@@ -1,10 +1,20 @@
 var usrRouter = require('./users');
 var redis = require('../models/redis');
+var mongo = require('../models/mongodb');
 
 module.exports = function(app) {
     /* GET home page. */
     app.get('/', function(req, res, next) {
-        res.render('index');
+        if (!req.session.user) {
+            res.render('index', {pageType: 'login'});
+        }
+        else{
+            res.render('index', {
+                pageType: 'main',
+                user: req.session.user
+            });
+        }
+
     });
 
     //扔瓶子
@@ -29,6 +39,28 @@ module.exports = function(app) {
             return res.json({code: 0, msg: '类型错误.'});
         }
         redis.pick(req.query, function(result) {
+            if (result.code === 1) {
+                mongo.save(req.query.user, result.msg, function(err) {
+                    if (err) {
+                        return res.json({code: 0, msg: '获取漂流瓶失败，请重试'});
+                    }
+                    return res.json(result);
+                });
+            }
+            res.json(result);
+        });
+    });
+
+    //获取一个用户的所有漂流瓶
+    app.get('/user/:user', function(req, res) {
+        mongo.getAll(req.params.user, function(result) {
+            res.json(result);
+        });
+    });
+
+    //获取单一的漂流瓶信息
+    app.get('/bottle/:_id', function (req, res) {
+        mongo.getOne(req.params._id, function(result) {
             res.json(result);
         });
     });

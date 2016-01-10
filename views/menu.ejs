@@ -1,0 +1,28 @@
+<div class="btn-group btn-group-justified pos-bottom" role="group">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pickModel">
+            <i class="fa fa-hand-rock-o"></i>
+            捞瓶子
+        </button>
+    </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#throwModel">
+            <i class="fa fa-hand-paper-o"></i>
+            扔瓶子
+        </button>
+    </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModel">
+            <i class="fa fa-list"></i>
+            我的瓶子
+        </button>
+    </div>
+    <div class="btn-group" role="group">
+        <a type="button" class="btn btn-info" href="/signout.do">
+            <i class="fa fa-user"></i>
+            <span class="label label-info"><%= user.name %></span>&nbsp;|&nbsp;
+            <i class="fa fa-sign-out"></i>
+            注销
+        </a>
+    </div>
+</div>

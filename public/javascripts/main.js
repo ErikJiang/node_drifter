@@ -128,5 +128,25 @@ $(document).ready(function () {
             }
         });
     });
+
+    //注销
+    $("#signoutBtn").click(function() {
+        $.ajax({
+            type: "get",
+            url: "/signout.do",
+            data: {},
+            cache: false,
+            dataType: 'json',
+            error: function () {
+                $('#promptModal').on('show.bs.modal', function () {
+                    $(this).find('.modal-title').html('提示信息：');
+                    var content = '<div class=\"text-center\">' +
+                        '<h3><i class=\"fa fa-frown-o\"></i>&nbsp;注销失败!</h3></div>';
+                    $(this).find('.modal-body').html(content);
+                });
+                $('#promptModal').modal('show');
+            }
+        });
+    });
 });
 

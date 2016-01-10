@@ -1,0 +1,95 @@
+<!-- pick bottle modal -->
+<div class="modal fade pos-center" id="pickModel" tabindex="-1" role="dialog" aria-labelledby="pickModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="pickModelLabel">捞瓶子</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="pick-name" class="control-label">打捞者:</label>
+                        <input type="text" class="form-control" name="pickName" id="pick-name" value="<%= user.name %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="pick-type" class="control-label">打捞类型:</label>
+                        <select class="form-control" name="pickType" id="pick-type">
+                            <option selected="selected">请选择类型</option>
+                            <option value="1">男生瓶</option>
+                            <option value="0">女生瓶</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-info" id="pickBtn" data-dismiss="modal">开始打捞</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- throw bottle modal -->
+<div class="modal fade pos-center" id="throwModel" tabindex="-1" role="dialog" aria-labelledby="throwModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="throwModelLabel">扔瓶子</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="throw-name" class="control-label">投扔者:</label>
+                        <input type="text" class="form-control" name="throwName" id="throw-name" value="<%= user.name %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="throw-type" class="control-label">性别:</label>
+                        <select class="form-control" name="throwType" id="throw-type">
+                            <% if(user.sex == 1) { %>
+                            <option value="1">男生瓶</option>
+                            <% } else { %>
+                            <option value="0">女生瓶</option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">漂流瓶信息:</label>
+                        <textarea class="form-control" name="throwMsg" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-info" id="throwBtn" data-dismiss="modal">开始投扔</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- all bottle modal -->
+<div class="modal fade pos-center" id="infoModel" tabindex="-1" role="dialog" aria-labelledby="myModelLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModelLabel">我的瓶子</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Recipient:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>

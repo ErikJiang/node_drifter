@@ -1,6 +1,20 @@
 module.exports = function (app) {
-    /* GET users listing. */
-    app.get('/users', function(req, res, next) {
-        res.send('respond with a resource');
+
+    //登录
+    app.post('/login.do', function(req, res) {
+        if (!req.session.user) {
+            req.session.user = {
+                name: req.body.name,
+                sex: req.body.sex
+            };
+        }
+        res.redirect('/');
     });
+
+    //注销
+    app.get('/signout.do', function (req, res) {
+        req.session.user = null;
+        res.redirect('/');
+    });
+
 };

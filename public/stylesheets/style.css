@@ -11,12 +11,26 @@ body {
     width: 1024px;
     height: 600px;
     border-radius: 5px;
-    background: url("../images/driftBottleBG.jpg") no-repeat;
+    background: url("../images/drifterBackground.jpg") -55px -60px no-repeat;
+    background-size: 1080px 670px;
     margin-top: 2%;
+    position: relative;
 }
 
 .pos-center {
     top: 15%;
+}
+
+.margin-set {
+    padding-top: 23%;
+}
+.margin-set h1 {
+    color: #ffffff;
+}
+
+.pos-bottom {
+    position: absolute;
+    bottom: 0px;
 }
 
 #resultModal .modal-body {
