@@ -46,3 +46,17 @@ body {
     width: 25%;
     height: 70%;
 }
+
+#listModel .modal-body .list-group {
+    height: 250px;
+    overflow: auto;
+}
+
+#listModel .modal-body .list-group p {
+    width:500px;
+    line-height:25px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+}
+

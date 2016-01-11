@@ -19,7 +19,7 @@ var bottleModel = mongoose.model('Bottle', bottleSchema);
 exports.save = function(picker, _bottle, callback) {
     var bottle = {bottle: [], message: []};
     bottle.bottle.push(picker);
-    bottle.message.push([_bottle.owner, _bottle.time, _bottle.content, _bottle.showDate]);
+    bottle.message.push([_bottle.owner, _bottle.time, _bottle.type, _bottle.content, _bottle.showDate]);
     var bottleEntity = new bottleModel(bottle);
     bottleEntity.save(function(err) {
         callback(err);

@@ -51,6 +51,7 @@ $(document).ready(function () {
                             content = '<div class=\"text-center\">' +
                             '<img class=\"start-img\" src="/images/starfish.jpg" />' +
                             '<h4>' +data.msg +'</h4></div>';
+                            modal.find('.modal-footer').html("<button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">关闭</button>");
                         }
                         modal.find('.modal-body').html(content);
                     });
@@ -98,8 +99,6 @@ $(document).ready(function () {
             cache: false,
             dataType: 'json',
             success: function(data) {
-                console.log('data: ', data);
-
                 $('#promptModal').on('show.bs.modal', function () {
                     var content = '';
                     $(this).find('.modal-title').html('提示信息：');
@@ -129,19 +128,56 @@ $(document).ready(function () {
         });
     });
 
-    //注销
-    $("#signoutBtn").click(function() {
+    //我的瓶子
+    $("#listInfoBtn").click(function () {
         $.ajax({
             type: "get",
-            url: "/signout.do",
+            url: "/listInfo.do",
             data: {},
             cache: false,
-            dataType: 'json',
-            error: function () {
+            dataType: "json",
+            success: function(data) {
+                console.log('data===>>:', data);
+                var listArr = data.msg;
+                $('#listModel').on('show.bs.modal', function () {
+                    var content = '';
+                    $(this).find('.modal-header').html("漂流瓶内容：");
+                    if (!data.code) {
+                        content = '<div class=\"text-center\">' +
+                        '<h3><i class=\"fa fa-frown-o\"></i>&nbsp;' + data.msg +'</h3></div>';
+                        $(this).find('.modal-body').html(content);
+                    }
+                    else {
+                        if(listArr.length) {
+                            for(var i=0; i<listArr.length; i++) {
+                                content += '<li class=\"list-group-item\">' +
+                                '<h3>' +
+                                (listArr[i].message[0][2]==1 ? '<i class=\"fa fa-male\"></i>':'<i class=\"fa fa-female\"></i>') +
+                                '&nbsp;&nbsp;'+ listArr[i].message[0][0] +
+                                '&nbsp;&nbsp;<small>' +
+                                listArr[i].message[0][4] +
+                                '</small>' +
+                                '</h3>' +
+                                '<p>' +
+                                listArr[i].message[0][3] +
+                                '</p>' +
+                                '<a class=\"label label-info\" onclick=\'bottleInfo(this)\' data-dismiss=\"modal\" rel=\"'+ listArr[i]._id +'\">详情</a>' +
+                                '</li>';
+                            }
+                        }
+                        else {
+                            content = '<li class=\"list-group-item\"><h3>暂无数据呈现……</h3></li>';
+                        }
+                        $(this).find('.list-group').html(content);
+                    }
+                });
+                $('#listModel').modal('show');
+            },
+            error: function() {
                 $('#promptModal').on('show.bs.modal', function () {
                     $(this).find('.modal-title').html('提示信息：');
                     var content = '<div class=\"text-center\">' +
-                        '<h3><i class=\"fa fa-frown-o\"></i>&nbsp;注销失败!</h3></div>';
+                        '<h3><i class=\"fa fa-frown-o\"></i>&nbsp;获取瓶子列表错误!</h3></div>';
                     $(this).find('.modal-body').html(content);
                 });
                 $('#promptModal').modal('show');
@@ -149,4 +185,51 @@ $(document).ready(function () {
         });
     });
 });
+
+//单一瓶子详细信息
+function bottleInfo(obj) {
+    var id = $(obj).attr("rel");
+    $.ajax({
+        type: "get",
+        url: "/bottleInfo.do",
+        data: {
+            id: id
+        },
+        cache: false,
+        dataType: "json",
+        success: function (data) {
+            console.log("data:>>", data);
+            $('#resultModal').on('show.bs.modal', function () {
+                var modal = $(this);
+                var content = '';
+                modal.find('.modal-title').html('打捞结果：');
+
+                content = '<div class=\"col-sm-12\">' +
+                '<div class=\"col-sm-4 text-right\">' +
+                '<img class=\"bottle-img\" src=\"/images/bottle.jpg\" />' +
+                '</div>' +
+                '<h3 class=\"col-sm-8\">' +
+                (data.msg.message[0][2]==1 ? '<i class=\"fa fa-male\"></i>':'<i class=\"fa fa-female\"></i>') +
+                '&nbsp;'+ data.msg.message[0][0] +'&nbsp;&nbsp;'+
+                '<small>' +
+                data.msg.message[0][4] +
+                '</small>' +
+                '</h3>' +
+                '<p>'+ data.msg.message[0][3] +'</p></div>';
+
+                modal.find('.modal-body').html(content);
+            });
+            $('#resultModal').modal('show');
+        },
+        error: function () {
+            $('#promptModal').on('show.bs.modal', function () {
+                $(this).find('.modal-title').html('提示信息：');
+                var content = '<div class=\"text-center\">' +
+                    '<h3<i class=\"fa fa-frown-o\"></i>&nbsp;打捞瓶子异常！</h3></div>';
+                $(this).find('.modal-body').html(content);
+            });
+            $('#promptModal').modal('show');
+        }
+    });
+}
 

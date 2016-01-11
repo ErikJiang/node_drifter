@@ -11,7 +11,8 @@ module.exports = function(app) {
         else{
             res.render('index', {
                 pageType: 'main',
-                user: req.session.user
+                user: req.session.user,
+                data: null
             });
         }
 
@@ -47,20 +48,22 @@ module.exports = function(app) {
                     return res.json(result);
                 });
             }
-            res.json(result);
+            else {
+                res.json(result);
+            }
         });
     });
 
     //获取一个用户的所有漂流瓶
-    app.get('/user/:user', function(req, res) {
-        mongo.getAll(req.params.user, function(result) {
+    app.get('/listInfo.do', function(req, res) {
+        mongo.getAll(req.session.user.name, function(result) {
             res.json(result);
         });
     });
 
     //获取单一的漂流瓶信息
-    app.get('/bottle/:_id', function (req, res) {
-        mongo.getOne(req.params._id, function(result) {
+    app.get('/bottleInfo.do', function (req, res) {
+        mongo.getOne(req.query.id, function(result) {
             res.json(result);
         });
     });
