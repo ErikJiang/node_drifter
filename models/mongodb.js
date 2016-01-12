@@ -21,8 +21,8 @@ exports.save = function(picker, _bottle, callback) {
     bottle.bottle.push(picker);
     bottle.message.push([_bottle.owner, _bottle.time, _bottle.type, _bottle.content, _bottle.showDate]);
     var bottleEntity = new bottleModel(bottle);
-    bottleEntity.save(function(err) {
-        callback(err);
+    bottleEntity.save(function(err, data) {
+        callback(err, data);
     });
 };
 
@@ -47,3 +47,13 @@ exports.getOne = function(_id, callback) {
     });
 };
 
+//删除特定 ID 的漂流瓶
+exports.delete = function (id, callback) {
+    //通过 ID 查找并删除漂流瓶
+    bottleModel.findByIdAndRemove(id, function (err) {
+        if(err) {
+            return callback({code: 0, msg: "删除漂流瓶失败..."});
+        }
+        callback({code: 1, msg: "删除成功！"});
+    });
+};

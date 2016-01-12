@@ -141,7 +141,7 @@ $(document).ready(function () {
                 var listArr = data.msg;
                 $('#listModel').on('show.bs.modal', function () {
                     var content = '';
-                    $(this).find('.modal-header').html("漂流瓶内容：");
+                    $(this).find('.modal-header').html("漂流瓶列表：");
                     if (!data.code) {
                         content = '<div class=\"text-center\">' +
                         '<h3><i class=\"fa fa-frown-o\"></i>&nbsp;' + data.msg +'</h3></div>';
@@ -184,7 +184,51 @@ $(document).ready(function () {
             }
         });
     });
+
 });
+
+//删除该漂流瓶
+function deleteBottle(obj) {
+    console.log("deleteBtn---------");
+    var id = $(obj).attr("name");
+    $.ajax({
+        type: "get",
+        url: "/delete.do",
+        data: {
+            id: id
+        },
+        cache: false,
+        dataType: "json",
+        success: function(data) {
+            console.log("delete return:>>", data);
+            $('#promptModal').on('show.bs.modal', function () {
+                var content = '';
+                $(this).find('.modal-title').html('提示信息：');
+                if (!data.code) {
+                    content = '<div class=\"text-center\">' +
+                    '<h3><i class=\"fa fa-frown-o\"></i>&nbsp;' + data.msg +'</h3></div>';
+                    $(this).find('.modal-body').html(content);
+                }
+                else {
+                    content = '<div class=\"text-center\">' +
+                    '<h3><i class=\"fa fa-smile-o\"></i>&nbsp;' + data.msg +'</h3></div>';
+                    $(this).find('.modal-body').html(content);
+
+                }
+            });
+            $('#promptModal').modal('show');
+        },
+        error: function () {
+            $('#promptModal').on('show.bs.modal', function () {
+                $(this).find('.modal-title').html('提示信息：');
+                var content = '<div class=\"text-center\">' +
+                    '<h3><i class=\"fa fa-frown-o\"></i>&nbsp;删除瓶子失败!</h3></div>';
+                $(this).find('.modal-body').html(content);
+            });
+            $('#promptModal').modal('show');
+        }
+    });
+}
 
 //单一瓶子详细信息
 function bottleInfo(obj) {
@@ -201,8 +245,9 @@ function bottleInfo(obj) {
             console.log("data:>>", data);
             $('#resultModal').on('show.bs.modal', function () {
                 var modal = $(this);
-                var content = '';
-                modal.find('.modal-title').html('打捞结果：');
+                var content = '',
+                    footer = '';
+                modal.find('.modal-title').html('漂流瓶内容：');
 
                 content = '<div class=\"col-sm-12\">' +
                 '<div class=\"col-sm-4 text-right\">' +
@@ -218,6 +263,9 @@ function bottleInfo(obj) {
                 '<p>'+ data.msg.message[0][3] +'</p></div>';
 
                 modal.find('.modal-body').html(content);
+                footer = '<button type=\"button\" class=\"btn btn-primary\" id=\"replyBtn\" data-dismiss=\"modal\">回复</button>' +
+                '<button type=\"button\" class=\"btn btn-primary\" id=\"deleteBtn\" data-dismiss=\"modal\" name=\"'+ data.msg._id +'\" onclick=\"deleteBottle(this)\">删除</button>';
+                modal.find('.modal-footer').html(footer);
             });
             $('#resultModal').modal('show');
         },

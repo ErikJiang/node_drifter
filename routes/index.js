@@ -41,10 +41,11 @@ module.exports = function(app) {
         }
         redis.pick(req.query, function(result) {
             if (result.code === 1) {
-                mongo.save(req.query.user, result.msg, function(err) {
+                mongo.save(req.query.user, result.msg, function(err, product) {
                     if (err) {
                         return res.json({code: 0, msg: '获取漂流瓶失败，请重试'});
                     }
+                    console.log("product>>: ", product);
                     return res.json(result);
                 });
             }
@@ -64,6 +65,13 @@ module.exports = function(app) {
     //获取单一的漂流瓶信息
     app.get('/bottleInfo.do', function (req, res) {
         mongo.getOne(req.query.id, function(result) {
+            res.json(result);
+        });
+    });
+
+    //删除特定 ID 的漂流瓶
+    app.get('/delete.do', function (req, res) {
+        mongo.delete(req.query.id, function (result) {
             res.json(result);
         });
     });
