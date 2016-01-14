@@ -26,5 +26,10 @@ NodeJS漂流瓶应用
 
     ./bin/www
 
+### 演示地址
+
+ 
+[nodedrifter.herokuapp.com](https://nodedrifter.herokuapp.com "node_drifter")
+
 ---
 
