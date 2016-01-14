@@ -59,4 +59,19 @@ body {
     white-space:nowrap;
     overflow:hidden;
 }
+#dialogModel {
+    top: 5%;
+}
+#dialogModel .modal-body .list-group {
+    height: 250px;
+    overflow: auto;
+}
 
+.fix-pos-1 {
+    position: fixed;
+    top: 35%; right: 0.2%;
+}
+.fix-pos-2 {
+    position: fixed;
+    top: 42%; right: 0.2%;
+}

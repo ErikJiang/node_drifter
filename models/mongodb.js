@@ -57,3 +57,31 @@ exports.delete = function (id, callback) {
         callback({code: 1, msg: "删除成功！"});
     });
 };
+
+// 回复特定 ID 的漂流瓶
+exports.reply = function(id, reply, callback) {
+    reply.time = reply.time || Date.now();
+    // 通过 ID 找到要回复的漂流瓶
+    bottleModel.findById(id, function(err, _bottle) {
+        if (err) {
+            return callback({code: 0, msg: "回复漂流瓶失败..."});
+        }
+        var newBottle = {};
+        newBottle.bottle = _bottle.bottle;
+        newBottle.message = _bottle.message;
+        // 如果捡瓶子的人第一次回复漂流瓶，则在 bottle 键添加漂流瓶主人
+        if (newBottle.bottle.length === 1) {
+            newBottle.bottle.push(_bottle.message[0][0]);
+        }
+        // 在 message 键添加一条回复信息
+        newBottle.message.push([reply.user, reply.time, reply.content, reply.showDate]);
+        // 更新数据库中该漂流瓶信息
+        bottleModel.findByIdAndUpdate(id, newBottle, function (err, bottle) {
+            if(err) {
+                return callback({code: 0, msg: "回复漂流瓶失败..."});
+            }
+            //成功时返回更新后的漂流瓶信息
+            callback({code: 1, msg: bottle});
+        });
+    });
+};
